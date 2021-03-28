@@ -319,16 +319,16 @@ def build_binary(args):
 
     if 'magiskinit' in args.target:
         dump_bin_headers()
-        flag += ' B_INIT=1'
+        flag += ' B_INIT=1 B_64BIT=1'
 
     if 'magiskpolicy' in args.target:
-        flag += ' B_POLICY=1'
+        flag += ' B_POLICY=1 B_64BIT=1'
 
     if 'resetprop' in args.target:
-        flag += ' B_PROP=1'
+        flag += ' B_PROP=1 B_64BIT=1'
 
     if 'magiskboot' in args.target:
-        flag += ' B_BOOT=1'
+        flag += ' B_BOOT=1 B_64BIT=1'
 
     if flag:
         run_ndk_build(flag)
