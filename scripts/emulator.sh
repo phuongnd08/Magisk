@@ -11,7 +11,7 @@
 # in the emulator. The constructed Magisk environment is not a
 # fully functional one as if it is running on an actual device.
 #
-# The script assumes you are using x86/x64 emulator images.
+# The script assumes you are using arm64-v8a emulator images.
 # Build binaries with `./build.py binary` before running this script.
 #
 #####################################################################
@@ -28,19 +28,16 @@ mount_sbin() {
 
 if [ ! -f /system/build.prop ]; then
   # Running on PC
+  echo "Running on PC"
   cd "$(dirname "$0")/.."
   tmp="/data/local/tmp"
-  adb push native/out/x86/busybox native/out/x86/magiskinit scripts/emulator.sh $tmp
-  emu_arch=$(adb shell "chmod 777 $tmp/busybox; $tmp/busybox uname -m")
-  if [ "$emu_arch" = "x86_64" ]; then
-    adb push native/out/x86_64/magisk /data/local/tmp
-  else
-    adb push native/out/x86/magisk /data/local/tmp
-  fi
+  adb push native/out/arm64-v8a/busybox native/out/arm64-v8a/magiskinit scripts/emulator.sh $tmp
+  adb push native/out/arm64-v8a/magisk /data/local/tmp
   adb shell sh /data/local/tmp/emulator.sh
   exit 0
 fi
 
+echo "Running on Android"
 cd /data/local/tmp
 chmod 777 busybox
 chmod 777 magiskinit
